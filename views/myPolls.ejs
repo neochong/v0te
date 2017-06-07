@@ -1,0 +1,25 @@
+<% include head.ejs %>
+
+<body>
+
+  <% include nav.ejs %>
+  <div class="container" style="width:150vh;margin-top:5vh">
+
+    <% for(var i=0; i<thesePolls.length;i++) { %>
+
+      <div class="box bg-info text-white text-center align-middle">
+
+        <h4 style="margin-bottom: 3vh"><%= thesePolls[i].question %></h4>
+        <div> <%= thesePolls[i].askedBy %> asked... </div>
+        <div style="margin-top: 3vh">
+          <a href="/polls/<%= thesePolls[i]._id %>" class="btn btn-primary">View Poll</a>
+        </div>
+
+      </div>
+
+    <% } %>
+
+  </div>
+
+</body>
+</html>

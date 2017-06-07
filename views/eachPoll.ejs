@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet">
+    <script src="/js/app.js"></script>
+    <title>Voting App</title>
+  </head>
+
+
+<body>
+
+<% include nav.ejs %>
+  <div class="container" style="width:150vh;margin-top:5vh">
+    <%- alert %>
+    <div class="row">
+
+      <div class="col-md-6 text-center">
+        <h2 >Question: <%= thisPoll.question %></h2>
+        <h4 style="margin-bottom:5vh">Asked by: <%= thisPoll.askedBy %></h4>
+
+          <% for(var i=0;i<thisPoll.options.length;i++) { %>
+          <div class="row" style="margin-bottom:3vh">
+            <div class="col-md-6">
+              <h5> <%= thisPoll.options[i].option %></h5>
+            </div>
+            <div class="col-md-6">
+              <form method="POST" action="/polls/<%= thisPoll._id %>">
+                <input type="text" name="form_type" style="display:none" value="vote">
+                <input type="text" name="optionId" style="display:none" value="<%= thisPoll.options[i]._id %>">
+                <input type="text" name="option" style="display:none" value="<%= thisPoll.options[i].option %>">
+                <input type="number" name="count" style="display:none" value="<%= thisPoll.options[i].count %>">
+                <button type="submit" class="btn btn-primary">Pick this</button>
+              </form>
+
+            </div>
+          </div>
+          <% } %>
+
+          <div style="margin-top:10vh">
+            <form method="POST" action="/polls/<%= thisPoll._id %>">
+                  <input type="text" name="form_type" style="display:none" value="add">
+                  <input type="text" name="newOption">
+                  <button type="submit" class="btn btn-success">Add an option!</button>
+            </form>
+          </div>
+
+          <% if(myvar === 1) { %>
+          <% if(currentuser === thisPoll.askedByEmail) { %>
+          <div style="margin-top:3vh">
+            <form method="POST" action="/polls/<%= thisPoll._id %>">
+                  <input type="text" name="form_type" style="display:none" value="remove">
+                  <input type="text" name="confirm" placeholder="Type 'YES'">
+                  <button type="submit" class="btn btn-danger">Delete this poll</button>
+            </form>
+          </div>
+          <% } %>
+          <% } %>
+
+          <% if(myvar === 1) { %>
+            <div style="margin-top:3vh">
+              <a class="btn btn-primary" id="share" target="_blank" href="https://twitter.com/intent/tweet?text=Go%20to%20v0te.herokuapp.com/polls/<%= thisPoll._id %>"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            </div>
+          <% } %>
+      </div>
+
+      <div class="col-md-6">
+        <canvas id="myChart"></canvas>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+  var ctx = document.getElementById("myChart").getContext('2d');
+
+  var optionsArr = [];
+  var countArr = [];
+  var colorArr = [
+    'rgba(255, 168, 168, 0.2)',
+    'rgba(179, 209, 249, 0.2)',
+    'rgba(178, 247, 193, 0.2)',
+    'rgba(255, 248, 173, 0.2)',
+    'rgba(236, 174, 239, 0.2)',
+    'rgba(252, 214, 174, 0.2)',
+    'rgba(255, 196, 202, 0.2)',
+    'rgba(19, 249, 219, 0.2)',
+    'rgba(15, 255, 31, 0.2)',
+    'rgba(166, 168, 166, 0.2)'
+  ]
+
+  var data = <%- JSON.stringify(thisPoll.options) %>
+
+  data.map(function(option){optionsArr.push(option.option)});
+  data.map(function(number){countArr.push(number.count)})
+
+  var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: optionsArr,
+        datasets: [{
+            data: countArr,
+            backgroundColor: colorArr,
+            borderWidth: 1
+        }]
+    }
+  });
+  </script>
+</body>
+</html>

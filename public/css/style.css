@@ -1,0 +1,23 @@
+.navbar-brand{
+  font-family: 'Dosis', sans-serif;
+  font-size: 200%;
+}
+
+.brand {
+  font-family: 'Dosis', sans-serif;
+  font-size: 300%;
+}
+
+.option {
+  margin-bottom: 1vh;
+}
+
+
+.box {
+  width: 40vh;
+  height: 40vh;
+  border-radius: 5vh;
+  margin: 5vh;
+  padding: 5vh;
+  float: left;
+}

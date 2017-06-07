@@ -1,0 +1,28 @@
+<% include head.ejs %>
+
+<body>
+  <% include nav.ejs %>
+<div class="container">
+  <%- alert %>
+
+  <div class="row" style="margin-top:5vh;">
+
+    <div class="col-md-6 offset-md-3">
+      <h1 class="brand text-center">v0te!</h1>
+      <p style="font-size:3vh;line-height:4vh;margin:5vh 0 5vh 0">v0te! is a web based application that enables you to vote on various polls, create your own custom polls,
+        and share them with your friends. You can view the results in realtime!
+        This application uses Node.js and Express.js on the back-end, and HTML5, CSS3, jQuery,
+        and Chart.js on the front-end.
+      </p>
+      <div class="text-center">
+      <a class="btn btn-primary" href="/polls">View Polls</a><span style="margin:0 2vh 0 2vh">or</span>
+      <a class="btn btn-primary" href="/createpoll">Create Poll</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -18,7 +18,7 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs')
 
 // db setup
-var url = process.env.URL;
+var url = process.env.MONGO_URL;
 var options = { server: { socketOptions: { keepAlive: 300000, connectTimeoutMS: 30000 } },
                 replset: { socketOptions: { keepAlive: 300000, connectTimeoutMS : 30000 } } };
 mongoose.Promise = global.Promise;
